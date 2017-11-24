@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>HTML中的各种HW</title>
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h2>元素的size</h2>
+                <p>元素也有size？元素的size是神马？？？</p>
+                <p>
+                    <small>分享者：刘亚楠</small>
+                </p>
+            </section>
+            <section>
+                <h3>元素的尺寸</h3>
+                <p class="fragment" data-fragment-index="1">说到元素的尺寸就不得不说一下盒子模型，说到盒子模型又不得不画个图。。。</p>
+                <p class="fragment" data-fragment-index="2">浏览器在解析html元素时，将每个元素当做一个盒子进行渲染，什么样的盒子？</p>
+                <p class="fragment" data-fragment-index="3"><img width="400" src="img/box.jpg" alt="img about element box!"></p>
+            </section>
+            <section>
+                <h3>如何通过js获取元素样式的值呢？</h3>
+                <p class="fragment" data-fragment-index="1">原生js中，如果是内联样式，可直接通过element.style获取height、padding和margin等属性值</p>
+                <p class="fragment" data-fragment-index="2">如果样式通过外联样式设置的宽高，是无法直接通过element.style获取，那该怎么办呢？</p>
+                <p class="fragment" data-fragment-index="3">如果是外联样式可以通过window.getComputedStyle()获取计算后的样式值</p>
+                <p class="fragment" data-fragment-index="4">
+                  <span class="fragment highlight-blue">注意:获取单位均为px，即使设置单位为em，也会被转化为px</span>
+                </p>
+                <p class="fragment" data-fragment-index="5">js虽然有时不能直接获取样式值，但可以直接获取clientHeight,offsetHeight,scrollHeight属性值</p>
+            </section>
+            <section>
+                <h3>clientHeight,offsetHeight,scrollHeight又是啥？</h3>
+                <ul>
+                  <li class="fragment" data-fragment-index="1">clientHeight表示元素可视区的高，即height + padding*2. 有滚动条时则为减去滚动条高度</li>
+                  <li class="fragment" data-fragment-index="2">offsetHeight表示元素大小，即height + padding*2 + border*2.</li>
+                  <li class="fragment" data-fragment-index="3">scrollHeight表示滚动元素的大小，如果元素没有滚动条时scrollHeight = clientHeight；如果有滚动条时，scrollHeight等于滚动内容的高。</li>
+                  <li class="fragment" data-fragment-index="4">
+                    <p class="fragment highlight-blue">相应可以获取宽度属性值clientWidth, offsetWidth, offsetWidth属性值</p>
+                  </li>
+                </ul>
+            </section>
+            <section>
+                <h3>clientTop和clientLeft又是啥？</h3>
+                <ul>
+                  <li class="fragment">clientTop和clientLeft可以获取元素所设置的左边框和上边框的大小。</li>
+                  <li class="fragment">如果各个边框的大小不一样的时候，可以通过计算出right和bottom的值</li>
+                  <li class="fragment">计算clientRight：offsetWidth - clientWidth - clientLeft</li>
+                  <li class="fragment">计算clientBottom：offsetHeight- clientHeight- clientTop</li>
+                </ul>
+            </section>
+            <section>
+                <h3>offsetLeft和offsetTop又是啥？</h3>
+                <ul>
+                  <li class="fragment">offsetLeft和offsetTop可以获取当前元素相对于父元素的位置。</li>
+                  <li class="fragment">这两个值会受到父元素padding的影响，padding增加，值相应的增加</li>
+                  <li class="fragment">这两个值会受到父元素border的影响，border增加，值相应的增加</li>
+                  <li class="fragment">这两个值会受到元素自己margin的影响，margin增加，值相应的增加</li>
+                </ul>
+            </section>
+            <section>
+                <h3>scrollTop和scrollLeft又是啥？</h3>
+                <ul>
+                  <li class="fragment">scrollTop和scrollLeft可以获取滚动条被隐藏(滚动条上方区域)的区域大小。</li>
+                  <li class="fragment">通过设置这两个值可以对元素内的滚动内容进行定位，展示该区域</li>
+                  <li class="fragment">scrollTop指的是元素内滚动内容所在区域滚动条距离父元素顶部的距离</li>
+                  <li class="fragment">scrollLeft指的是元素内滚动内容所在区域滚动条距离父元素左边的距离</li>
+                  <li class="fragment">crtl+F功能的原理就是根据这两个属性进行实现</li>
+                </ul>
+            </section>
+            <section>
+                <h3>jq中获取Height、innerHeight和outerHeight</h3>
+                <ol>
+                    <li class="fragment" data-fragment-index="1">通过height()可获取元素的高度，即盒子模型中height的值</li>
+                    <li class="fragment" data-fragment-index="2">通过innerHeight()可获取height + padding*2 的值</li>
+                    <li class="fragment" data-fragment-index="3">通过outerHeight()可获取height + padding*2 + border*2 的值</li>
+                    <li class="fragment" data-fragment-index="4">
+                        <p class="fragment highlight-red">如果outerHeight()传参true则会获取height + padding*2 + border*2 + margin*2 的值</p>
+                    </li>
+                    <li class="fragment" data-fragment-index="5">
+                        <p class="fragment highlight-blue">相应获取宽度属性值可以使用width，innerWidth和outerWidth方法</p>
+                    </li>
+                </ol>
+            </section>
+            <section>
+                <h3>jq中获取元素偏移</h3>
+                <ol>
+                    <li class="fragment" data-fragment-index="1">通过offset()可获取元素相对于document文档的坐标值</li>
+                    <li class="fragment" data-fragment-index="2">通过offset()的top和left两个属性分别获取距离顶部和左边的距离</li>
+                    <li class="fragment" data-fragment-index="3">通过position()可获取相对于最近的已定位的包含元素的位置。</li>
+                    <li class="fragment" data-fragment-index="4">通过position()的top和left两个属性分别获取距离顶部和左边的距离</li>
+                </ol>
+            </section>
+            <section style="text-align: left;">
+                <h1>THE END</h1>
+            </section>
+        </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true },
+            { src: 'plugin/notes/notes.js', async: true }
+        ]
+    });
+    </script>
+</body>
+
+</html>
