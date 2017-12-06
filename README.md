@@ -1,1 +1,1 @@
- click to see the demo.  https://marilynlee.github.io/share/#/
+the demo url.  https://marilynlee.github.io/share/#/
