@@ -1,1 +1,1 @@
-- element size https://marilynlee.github.io/share/#/
+ click to see the demo.  https://marilynlee.github.io/share/#/
